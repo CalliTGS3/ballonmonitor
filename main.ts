@@ -1,4 +1,4 @@
-input.onButtonEvent(Button.A, ButtonEvent.Click, function () {
+input.onButtonEvent(Button.A, input.buttonEventValue(ButtonEvent.Click), function () {
     OLED12864_I2C.clear()
     if (Seite < 4) {
         Seite += 1
