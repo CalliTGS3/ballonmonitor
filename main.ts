@@ -1,6 +1,6 @@
 input.onButtonEvent(Button.A, ButtonEvent.Click, function () {
     OLED12864_I2C.clear()
-    if (Seite < 3) {
+    if (Seite < 4) {
         Seite += 1
     } else {
         Seite = 1
@@ -41,7 +41,11 @@ radio.onReceivedString(function (receivedString) {
     if (EmpfangenerText.includes("IR:")) {
         IR = EmpfangenerText.substr(3, 10)
     }
+    if (EmpfangenerText.includes("PS:")) {
+        PS = EmpfangenerText.substr(3, 10)
+    }
 })
+let PS = ""
 let IR = ""
 let UV = ""
 let Licht = ""
@@ -186,6 +190,21 @@ basic.forever(function () {
         2,
         3,
         IR,
+        1
+        )
+        basic.pause(1000)
+    }
+    if (Seite == 4) {
+        OLED12864_I2C.showString(
+        0,
+        1,
+        "P",
+        1
+        )
+        OLED12864_I2C.showString(
+        2,
+        1,
+        PS,
         1
         )
         basic.pause(1000)
