@@ -1,6 +1,6 @@
-input.onButtonEvent(Button.A, ButtonEvent.Click, function () {
+input.onButtonEvent(Button.A, input.buttonEventValue(ButtonEvent.Click), function () {
     OLED12864_I2C.clear()
-    if (Seite < 3) {
+    if (Seite < 4) {
         Seite += 1
     } else {
         Seite = 1
@@ -26,6 +26,9 @@ radio.onReceivedString(function (receivedString) {
     if (EmpfangenerText.includes("TE:")) {
         Temperatur = EmpfangenerText.substr(3, 10)
     }
+    if (EmpfangenerText.includes("T2:")) {
+        Temperatur2 = EmpfangenerText.substr(3, 10)
+    }
     if (EmpfangenerText.includes("LU:")) {
         Luftdruck = EmpfangenerText.substr(3, 10)
     }
@@ -38,15 +41,24 @@ radio.onReceivedString(function (receivedString) {
     if (EmpfangenerText.includes("UV:")) {
         UV = EmpfangenerText.substr(3, 10)
     }
+    if (EmpfangenerText.includes("U2:")) {
+        UV2 = EmpfangenerText.substr(3, 10)
+    }
     if (EmpfangenerText.includes("IR:")) {
         IR = EmpfangenerText.substr(3, 10)
     }
+    if (EmpfangenerText.includes("PS:")) {
+        PowerSolar = EmpfangenerText.substr(3, 10)
+    }
 })
+let PowerSolar = ""
 let IR = ""
+let UV2 = ""
 let UV = ""
 let Licht = ""
 let Luftfeuchte = ""
 let Luftdruck = ""
+let Temperatur2 = ""
 let Temperatur = ""
 let Hoehe = ""
 let Breite = ""
@@ -186,6 +198,45 @@ basic.forever(function () {
         2,
         3,
         IR,
+        1
+        )
+        basic.pause(1000)
+    }
+    if (Seite == 4) {
+        OLED12864_I2C.showString(
+        0,
+        1,
+        "T2",
+        1
+        )
+        OLED12864_I2C.showString(
+        0,
+        2,
+        "U2",
+        1
+        )
+        OLED12864_I2C.showString(
+        0,
+        3,
+        "PS",
+        1
+        )
+        OLED12864_I2C.showString(
+        2,
+        1,
+        Temperatur2,
+        1
+        )
+        OLED12864_I2C.showString(
+        2,
+        2,
+        UV2,
+        1
+        )
+        OLED12864_I2C.showString(
+        2,
+        3,
+        PowerSolar,
         1
         )
         basic.pause(1000)
